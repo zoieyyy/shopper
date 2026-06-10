@@ -1,0 +1,348 @@
+﻿.btn-reset {
+    color: black;
+    background-color: rgb(239, 239, 239) !important
+}
+.RadInput_Bootstrap .riHover, .RadInput_Hover_Bootstrap {
+    border-color: #A60040 !important;
+    box-shadow:none!important;
+}
+.RadInput_Bootstrap input
+{
+    height:38px !important;
+}
+.rcCalPopup {
+    height: 36px !important;
+}
+.rgEditRow input {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.6;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e3e0f1;
+    color: #61667d;
+    border-radius: 3px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-size: 14px;
+    font-weight: 300;
+}
+.RadUpload .ruBrowse {
+    /*height: 2.20em !important;*/
+    color: #fff !important;
+    background-color: #8966f7 !important;
+    border-color: #005cbf !important;
+    border: 1px solid #8966f7 !important;
+    letter-spacing: .5px !important;
+}
+.top-padding {
+    padding-top:10px;
+}
+
+.RadUpload .ruBrowse {
+    background-color: rgb(166, 0, 64) !important;
+    border-color: rgb(166, 0, 64) !important;
+    border: 1px solid rgb(166, 0, 64) !important;
+}
+
+.shortcut-button {
+    background: #A60040;
+    color: #fff;
+    position: fixed;
+    bottom: 135px;
+    line-height: 50px;
+    right: 20px;
+    z-index: 99;
+    text-align: center;
+    border-radius: 50%;
+    z-index: 1000;
+    height: 50px;
+    width: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-color 0.1s linear;
+    -moz-transition: background-color 0.1s linear;
+    -webkit-transition: background-color 0.1s linear;
+    -o-transition: background-color 0.1s linear;
+}
+
+
+
+    .shortcut-button:hover {
+        background: #FAF9FF;
+        color: #A60040;
+        border: 2px solid #A60040;
+    }
+.rcFocusTxt {
+    border: 1px solid #A60040 !important;
+}
+
+#ctl00_MainContent_radCaptcha_CaptchaTextBoxLabel {
+    margin-left: 10px !important;
+    color: black !important;
+}
+.breadcrumb-item a {
+color:black !important;
+}
+
+.a-black {
+    color:black;
+}
+
+.RadDataPager_Bootstrap .rdpNumPart a.rdpCurrentPage {
+    border-color: #A60040 !important;
+    color: #fff;
+    background-color: #A60040 !important;
+}
+.icon-circle-lg {
+    height: 50px;
+    width: 50px;
+}
+input[type="radio"], input[type="checkbox"] {
+    margin-right:5px;
+}
+.j-color {
+    color: #A91E3F !important;
+}
+.QuizInput input[type=checkbox], input[type=radio] {
+    border: 1px solid #a9a9a9 !important;
+    border-radius: .25em !important;
+    width: 1.2em !important;
+    height: 1.6em !important;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px
+}
+.QuizInput label {
+    display: inline;
+    padding-left: 5px;
+    text-indent: -10px;
+}
+.QuizInput{
+    display:block;
+}
+.light-gray-color {
+    color: lightslategray;
+}
+.custom-btn {
+    background-color: white;
+    border-color: #A60040 !important;
+    color: #A60040 !important;
+}
+.custom-btn:hover {
+    background-color: white;
+    border-color: #A60040 !important;
+    color: #A60040 !important;
+}
+input[type="checkbox"] {
+    height: 20px !important;
+    width: 20px !important;
+}
+.RadComboBox .rcbEmptyMessage {
+    font-style:normal !important;
+}
+
+.cxpanel-title {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 16px !important;
+    color: inherit !important;
+}
+
+
+.cxpanel {
+    margin-bottom: 20px;
+    background-color: #fff !important;
+    border: 1px solid #ebeaf1 !important;
+    border-radius: 4px !important;
+    -webkit-box-shadow: 0 1px 1px rgba(199, 199, 199, 0.2) !important;
+    box-shadow: 0 1px 1px rgba(199, 199, 199, 0.2) !important;
+}
+
+.cxpanel-default > .cxpanel-heading {
+    color: #fff !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+}
+.cxpanel-heading {
+    padding: 10px 15px !important;
+    border-bottom: 1px solid #ebeaf1;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+}
+
+.cxpanel-footer {
+    padding: 10px 15px !important;
+    background-color: #f5f6fb !important;
+    border-top: 1px solid #ebeaf1 !important;
+    border-bottom-right-radius: 3px !important;
+    border-bottom-left-radius: 3px !important;
+}
+
+.cxpanel-body {
+    padding: 15px !important;
+}
+.color-black {
+    color: #000000 !important;
+}
+
+@font-face {
+    font-family: ITC Avant Garde Gothic Std Book;
+    src: url('../font-avant-garde/itc-avant-garde-gothic-std-book.otf');
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap');
+}
+
+h1, .h1 {
+    font-size: 24px !important;
+    letter-spacing: 0.2em !important;
+    font-family: ITC Avant Garde Gothic Std Book !important;
+    
+}
+
+h2, .h2 {
+    font-size: 18px !important;
+    letter-spacing: 0.2em !important;
+    font-family: ITC Avant Garde Gothic Std Book !important;
+    
+}
+
+
+h3, .h3 {
+    font-size: 14px !important;
+    letter-spacing: 0.2em !important;
+    font-family: ITC Avant Garde Gothic Std Book !important;
+    
+}
+
+
+h4, .h4 {
+    font-size: 12px !important;
+    letter-spacing: 0.0em !important;
+    font-family: ITC Avant Garde Gothic Std Book !important;
+    
+}
+
+
+h5, .h5 {
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
+    font-family: ITC Avant Garde Gothic Std Book !important;
+    
+}
+
+.j-black {
+    color: rgb(38,36,41) !important;
+}
+.j-black-bg {
+    background-color: rgb(38,36,41) !important;
+}
+.j-gray {
+    color:rgb(113,114,113)  !important;
+}
+
+.j-white {
+    color: #ffffff !important;
+}
+
+.j-white-bg {
+    background-color: #ffffff !important;
+}
+
+
+.mi-white {
+    background-color: #fff !important;
+    border: 0px !important;
+    display: inline-flex !important;
+    margin-top: 0px !important;
+    padding-left: 0px !important;
+    font-weight: bold !important;
+    color: rgb(38,36,41) !important;
+}
+
+.mi-black {
+    background-color: rgb(38,36,41) !important;
+    border: 0px !important;
+    display: inline-flex !important;
+    margin-top: 0px !important;
+    padding: 10px 0 10px 10px !important;
+    font-weight: bold !important;
+    color: #fff !important;
+}
+
+.bi-house-door {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' class='bi bi-house-door' viewBox='0 0 16 16'> <path d='M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z'/> </svg>");
+}
+
+.white-hr {
+    background-color: #fff;
+    margin-top:0px !important;
+    margin-bottom:0px !important;
+}
+
+.icon-card-list {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-card-list' viewBox='0 0 16 16'%3E%3Cpath d='M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z'/%3E%3Cpath d='M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    border: 0px;
+    background-color: transparent;
+    text-align:center;
+    width:35px;
+    height:auto;
+    display:block;
+}
+
+.rgAltRow {
+    border-color: rgb(113,114,113) !important;
+}
+
+.rgRow {
+    border-color: rgb(113,114,113) !important;
+}
+
+.hr-top-bottom-margin5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.card-header {
+    background-color: rgb(38,36,41) !important;
+    color: #fff !important;
+    /*padding: 5px 15px 5px; MK made it to make heading vertical midldle otherwise it will touch top*/
+    vertical-align: middle;
+}
+    .card-header .card-title  {
+        color: #fff !important;
+    }
+    .card-header .card-options-collapse {
+        color: #fff !important;
+    }
+
+.card-header h4 a {
+    color: #fff !important;
+}
+.RadPicker_Bootstrap .rcTimePopup {
+    height: 36px !important;
+    background-position: -9px -4257px !important;
+}
+.table {
+    --bs-table-hover-bg: #f7f8fa !important;
+	--bs-table-bg: transparent;
+}
+.disabled-nav {
+    cursor: not-allowed !important;
+    
+}
+
+    .disabled-nav h4 {
+        cursor: not-allowed !important;
+        
+    }
+
+    .disabled-nav a:hover {
+        cursor: not-allowed !important;
+        
+    }

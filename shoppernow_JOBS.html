@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('sn-theme')||'red');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>function _gmapReady(){window._gmLoaded=true;if(window._gmPending){window._gmPending=false;initMap();}}</script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXMYP2NFDFBqIJbkE1DrxqWd7j5KH1AIY&libraries=marker&v=beta&callback=_gmapReady"></script>
+<title>My Jobs — ShopperNow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --brand: #A91E3F; --brand-dark: #8a1833; }
+  [data-theme="purple"] { --brand: #7535DE; --brand-dark: #5e28b8; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    background: #f4f6f9;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+
+  /* HEADER */
+  header {
+    background: #2b2b2b;
+    color: #fff;
+    padding: 0 20px;
+    height: 50px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-logo { font-size: 15px; font-weight: 600; color: #fff; text-decoration: none; letter-spacing: 0.02em; }
+  .header-logo span { background: var(--brand); color: #fff; padding: 2px 7px; border-radius: 3px; margin-left: 4px; }
+  .header-user { font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 12px; }
+  .header-user a { color: #888; text-decoration: none; font-size: 12px; border: 0.5px solid #555; padding: 3px 10px; border-radius: 3px; }
+  .header-user a:hover { color: #fff; border-color: #888; }
+
+  /* NAV */
+  nav.top-nav {
+    background: var(--brand);
+    display: flex; gap: 0;
+    justify-content: center;
+    border-bottom: 1px solid var(--brand-dark);
+    overflow-x: auto;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  nav.top-nav::-webkit-scrollbar { display: none; }
+  nav.top-nav a {
+    display: flex; align-items: center; gap: 7px;
+    padding: 0 22px; height: 44px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+  nav.top-nav a:hover { color: #fff; }
+  nav.top-nav a.active { color: #fff; border-bottom-color: #fff; }
+  nav.top-nav a svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .badge { background: #fff; color: var(--brand); font-size: 9px; font-weight: 700; border-radius: 20px; padding: 1px 6px; min-width: 18px; text-align: center; }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+  }
+  .page-title { font-size: 22px; font-weight: 700; }
+  .page-subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+
+  /* VIEW TOGGLE */
+  .view-toggle { display: flex; gap: 0; }
+  .view-btn {
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    background: #fff; color: #555;
+    font-size: 12px; font-family: inherit; cursor: pointer;
+    margin-left: -1px;
+  }
+  .view-btn:first-child { border-radius: 4px 0 0 4px; margin-left: 0; }
+  .view-btn:last-child { border-radius: 0 4px 4px 0; }
+  .view-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); z-index: 1; position: relative; }
+
+  /* STATS */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; margin-bottom: 20px;
+  }
+  .stat-card {
+    background: #fff; border: 0.5px solid #dde1ea;
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #888; }
+  .stat-value { font-size: 26px; font-weight: 700; margin-top: 2px; color: #1a1a1a; }
+  .stat-value.red { color: var(--brand); }
+
+  /* EARNINGS BAR */
+  .earnings-bar {
+    background: #fff; border: 0.5px solid #dde1ea;
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 8px;
+  }
+  .earnings-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #888; }
+  .earnings-value { font-size: 24px; font-weight: 700; color: #1a1a1a; }
+  .earnings-breakdown { font-size: 12px; color: #888; margin-top: 2px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; align-items: center;
+  }
+  .filter-label { font-size: 12px; color: #666; font-weight: 600; margin-right: 2px; }
+  .filter-chip {
+    padding: 5px 12px; border-radius: 3px;
+    border: 1px solid #ccc;
+    background: #fff; color: #555;
+    font-size: 12px; font-family: inherit; cursor: pointer;
+  }
+  .filter-chip:hover { border-color: #999; color: #1a1a1a; }
+  .filter-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--brand);
+  }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .section-count {
+    background: var(--brand); color: #fff;
+    border-radius: 3px; padding: 1px 8px;
+    font-size: 11px; font-weight: 700;
+  }
+
+  /* JOB CARDS */
+  .jobs-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .job-card {
+    background: #fff; border: 0.5px solid #dde1ea;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 12px; align-items: start;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.1s;
+  }
+  .job-card:hover { border-color: #999; }
+  .job-card.today { border-left: 3px solid var(--brand); }
+  .job-card.hidden { display: none; }
+
+  .job-name {
+    font-size: 15px; font-weight: 700; color: #1a1a1a;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .today-label {
+    background: var(--brand); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 2px 6px; border-radius: 2px; text-transform: uppercase;
+  }
+
+  .job-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+  .job-id { font-size: 11px; color: #aaa; font-family: monospace; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 7px; border-radius: 2px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.03em;
+    border: 1px solid;
+  }
+  .tag-liquorland  { background: #fef3f3; color: #c0392b; border-color: #f5c6c6; }
+  .tag-bws         { background: #fff8f0; color: #d05f00; border-color: #f5d9b0; }
+  .tag-dan         { background: #f0f7ff; color: #1565c0; border-color: #b3d1f5; }
+  .tag-online      { background: #f0fff4; color: #256b3b; border-color: #b3e6c8; }
+  .tag-campaign    { background: #f8f8f8; color: #555; border-color: #ddd; }
+
+  .job-address {
+    font-size: 12px; color: #666; margin-top: 5px;
+    display: flex; align-items: flex-start; gap: 5px;
+  }
+  .job-address svg { flex-shrink: 0; margin-top: 1px; color: #aaa; }
+
+  .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .job-pay { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+  .job-pay.high { color: #1a7a40; }
+
+  .job-dates { text-align: right; }
+  .visit-date { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+  .visit-date.today-date { color: var(--brand); }
+  .date-window { font-size: 11px; color: #888; margin-top: 1px; }
+
+  .action-btns { display: flex; gap: 6px; }
+  .btn {
+    padding: 6px 12px; border-radius: 3px;
+    font-size: 12px; font-weight: 600; font-family: inherit;
+    cursor: pointer; border: 1px solid; text-decoration: none;
+    display: inline-flex; align-items: center;
+  }
+  .btn-primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .btn-primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+  .btn-ghost { background: #fff; color: #555; border-color: #ccc; }
+  .btn-ghost:hover { border-color: #999; color: #1a1a1a; }
+
+  /* CALENDAR VIEW */
+  #calendarView { display: none; }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    border: 0.5px solid #dde1ea;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .cal-day-header {
+    background: #2b2b2b; color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 8px 6px; text-align: center;
+    border-right: 1px solid #333;
+  }
+  .cal-day-header:last-child { border-right: none; }
+  .cal-cell {
+    min-height: 90px; padding: 6px;
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    vertical-align: top;
+  }
+  .cal-cell:nth-child(7n) { border-right: none; }
+  .cal-cell.empty { background: #f9f9f9; }
+  .cal-cell.has-jobs { background: #fff; }
+  .cal-cell.today-cell { background: #fffbf5; }
+  .cal-date {
+    font-size: 12px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;
+  }
+  .cal-date.today-num {
+    background: var(--brand); color: #fff;
+    border-radius: 50%; width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+  .cal-job-pill {
+    display: block;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 5px; border-radius: 2px;
+    margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-decoration: none;
+  }
+  .cal-job-pill.liquorland { background: #fef3f3; color: #c0392b; }
+  .cal-job-pill.bws       { background: #fff8f0; color: #d05f00; }
+  .cal-job-pill.dan       { background: #f0f7ff; color: #1565c0; }
+  .cal-more { font-size: 10px; color: #888; margin-top: 2px; cursor: pointer; text-decoration: underline dotted; }
+  .cal-cell.clickable { cursor: pointer; }
+  .cal-cell.clickable:hover { background: #f0f0f0 !important; }
+
+  /* Day popup */
+  .cal-popup-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.38); z-index: 500;
+    align-items: flex-start; justify-content: center;
+    padding-top: 90px;
+  }
+  .cal-popup-overlay.open { display: flex; }
+  .cal-popup {
+    background: #fff; border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    padding: 16px 18px 12px;
+    min-width: 260px; max-width: 380px;
+    max-height: 72vh; overflow-y: auto;
+  }
+  .cal-popup-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .cal-popup-title { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .cal-popup-x {
+    background: none; border: none; font-size: 20px; line-height: 1;
+    color: #aaa; cursor: pointer; padding: 0 2px; font-family: inherit;
+  }
+  .cal-popup-x:hover { color: #1a1a1a; }
+  .cal-popup-item {
+    display: block; padding: 8px 10px; border-radius: 3px;
+    margin-bottom: 5px; font-size: 12px; font-weight: 600;
+    text-decoration: none;
+  }
+  .cal-popup-item.liquorland { background: #fef3f3; color: #c0392b; }
+  .cal-popup-item.bws       { background: #fff8f0; color: #d05f00; }
+  .cal-popup-item.dan       { background: #f0f7ff; color: #1565c0; }
+  .cal-popup-item:hover { opacity: 0.8; }
+
+  .cal-month-header {
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 10px; color: #1a1a1a;
+  }
+  .cal-month-section { margin-bottom: 28px; }
+
+  /* ── MAP VIEW ────────────────────────────────────────── */
+  #mapView { display: none; }
+  #mapLeaflet {
+    height: 520px; border-radius: 4px;
+    border: 1px solid #ddd; margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .map-legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 12px; align-items: center;
+  }
+  .map-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
+  .map-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Google Maps InfoWindow overrides */
+  .gm-style .gm-style-iw-c {
+    padding: 0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.18) !important;
+    overflow: hidden !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+  }
+  .gm-style .gm-style-iw-d { overflow: hidden !important; }
+  .gm-style-iw-ch {
+    position: absolute !important; top: 0 !important; right: 0 !important;
+    padding: 0 !important; height: 0 !important; overflow: visible !important;
+    background: none !important;
+  }
+  .gm-ui-hover-effect {
+    top: 6px !important; right: 6px !important;
+    opacity: 0.4 !important; border-radius: 50% !important;
+  }
+  .gm-ui-hover-effect:hover { opacity: 1 !important; background: rgba(0,0,0,0.06) !important; }
+  .gm-ui-hover-effect > span { background-color: #333 !important; }
+
+  .map-popup-header { padding: 12px 36px 10px 14px; border-bottom: 1px solid #f0f0f0; }
+  .map-popup-name { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.3; margin-top: 5px; }
+  .map-popup-body { padding: 10px 14px 14px; min-width: 230px; }
+  .map-popup-date { font-size: 12px; font-weight: 600; color: #1a1a1a; }
+  .map-popup-window { font-size: 11px; color: #888; margin: 1px 0 8px; }
+  .map-popup-pay { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+  .map-popup-pay.high { color: #1a7a40; }
+  .map-popup-address {
+    font-size: 11px; color: #666; margin-bottom: 11px;
+    line-height: 1.45; display: flex; gap: 4px; align-items: flex-start;
+  }
+  .map-popup-address svg { flex-shrink: 0; margin-top: 1px; color: #aaa; }
+  .map-popup-actions { display: flex; gap: 6px; }
+
+  /* Online jobs panel */
+  .online-jobs-list { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+  .online-card {
+    background: #fff; border: 1px solid #ddd; border-radius: 4px;
+    padding: 11px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .online-card-name { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+  .online-card-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 3px; }
+  .online-card-pay { font-size: 18px; font-weight: 700; color: #1a7a40; }
+
+  /* hide top nav scrollbar on desktop */
+  nav { scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+
+  /* ── BOTTOM NAV (mobile only, shown via @media) ──────────── */
+  .bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #1a1a1a;
+    border-top: 1px solid #2d2d2d;
+    border-bottom: none;
+    padding: 0 0 env(safe-area-inset-bottom, 0); gap: 0;
+    overflow: visible; z-index: 150;
+  }
+  .bnav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 9px 4px 10px; height: auto; gap: 3px;
+    color: #666; text-decoration: none;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.01em;
+    background: none; border: none; cursor: pointer;
+    font-family: inherit; position: relative;
+    border-bottom: none; /* override nav a styles */
+  }
+  .bnav-item svg {
+    width: 22px; height: 22px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .bnav-item.active { color: #fff; }
+  .bnav-item.active::before {
+    content: ''; position: absolute; top: 0; left: 25%; right: 25%;
+    height: 2px; background: #fff; border-radius: 0 0 2px 2px;
+  }
+  .bnav-badge {
+    position: absolute; top: 6px; left: calc(50% + 8px);
+    background: var(--brand); color: #fff;
+    font-size: 9px; font-weight: 700;
+    border-radius: 10px; padding: 1px 5px; line-height: 1.4;
+    border: 1.5px solid #1a1a1a;
+  }
+
+  /* calendar mobile dots — hidden on desktop, shown by media query */
+  .cal-dots { display: none; gap: 2px; margin-top: 2px; flex-wrap: wrap; align-items: center; }
+  .cal-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cal-dot.liquorland { background: var(--brand); }
+  .cal-dot.bws        { background: #d05f00; }
+  .cal-dot.dan        { background: #1565c0; }
+
+  footer { background: #1a1a1a; color: #888; text-align: center; padding: 12px; font-size: 11.5px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; }
+  body { padding-bottom: 40px; }
+
+  /* ── NOTES & FAVORITES ──────────────────────────────────── */
+  .card-actions {
+    display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-top: 7px;
+  }
+  .ca-btn {
+    background: #fff; border: 1px solid #dde1ea; border-radius: 3px;
+    padding: 2px 8px; font-size: 11px; font-weight: 600; font-family: inherit;
+    cursor: pointer; color: #888; display: inline-flex; align-items: center; gap: 3px;
+    transition: all 0.12s;
+  }
+  .ca-btn:hover { border-color: #bbb; color: #444; }
+  .ca-btn.fav-on { background: #fff0f6; border-color: #ec4899; color: #be185d; }
+  .job-card.is-faved { border-left: 3px solid #ec4899 !important; }
+  .note-area { display: none; margin-top: 6px; }
+  .note-area.open { display: block; }
+  .note-area textarea {
+    width: 100%; border: 1px solid #dde1ea; border-radius: 4px;
+    padding: 6px 9px; font-size: 12px; font-family: inherit; color: #333;
+    resize: vertical; min-height: 58px; outline: none; line-height: 1.5;
+  }
+  .note-area textarea:focus { border-color: var(--brand); }
+
+  @media (max-width: 640px) {
+    /* Swap top nav for bottom tab bar */
+    nav.top-nav { display: none; }
+    .bottom-nav { display: flex; }
+
+    /* Header */
+    header { padding: 0 14px; height: 48px; }
+
+    /* Main */
+    main { padding: 14px 12px 80px; }
+
+    /* Page header — stack title above toggle */
+    .page-header { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 14px; }
+    .view-toggle { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .view-btn { text-align: center; padding: 9px 4px; font-size: 13px; }
+
+    /* Stats */
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stat-card { padding: 12px 14px; }
+    .stat-value { font-size: 22px; }
+
+    /* Earnings bar */
+    .earnings-bar { padding: 12px 14px; margin-bottom: 14px; }
+    .earnings-breakdown { font-size: 11px; }
+
+    /* Filter */
+    .filter-bar { gap: 6px; margin-bottom: 12px; }
+    .filter-chip { padding: 6px 10px; font-size: 12px; }
+
+    /* Job cards — left col full width, right col reflows below */
+    .job-card { grid-template-columns: 1fr; padding: 12px 14px; gap: 0; }
+    .job-right {
+      flex-direction: row; align-items: center; flex-wrap: wrap;
+      gap: 8px 16px; margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid #f0f0f0; justify-content: space-between;
+    }
+    .job-pay { font-size: 20px; }
+    .job-dates { text-align: left; }
+    .action-btns { width: 100%; }
+    .action-btns .btn {
+      flex: 1; justify-content: center;
+      padding: 10px 8px; font-size: 13px;
+    }
+
+    /* Calendar grid */
+    .cal-month-header { font-size: 14px; }
+    .cal-day-header { font-size: 9px; padding: 7px 1px; letter-spacing: 0; }
+    .cal-cell { min-height: 52px; padding: 4px 2px; }
+    .cal-date { font-size: 11px; margin-bottom: 2px; }
+    .cal-date.today-num { width: 18px; height: 18px; font-size: 10px; }
+    .cal-job-pill { display: none; }   /* replaced by dots on mobile */
+    .cal-dots { display: flex; }
+    .cal-more { font-size: 9px; }
+
+    /* Calendar popup — bottom sheet instead of centered modal */
+    .cal-popup-overlay { padding: 0; align-items: flex-end; padding-top: 0; }
+    .cal-popup {
+      width: 100%; max-width: 100%; min-width: 0;
+      border-radius: 14px 14px 0 0;
+      max-height: 65vh; padding: 14px 16px 28px;
+    }
+
+    /* Map */
+    #mapLeaflet { height: 400px; }
+    .map-legend { gap: 10px; }
+
+    /* Online job cards — stack vertically */
+    .online-card { flex-direction: column; gap: 10px; }
+    .online-card > div:last-child { width: 100% !important; flex-shrink: 1 !important; justify-content: space-between; }
+    .online-card > div:last-child > div:last-child { flex: 1; margin-left: 12px; }
+    .online-card > div:last-child > div:last-child a { flex: 1; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="header-logo" href="dashboard.HTML">SHOPPER<span>NOW</span></a>
+  <div class="header-user">
+    <span>Hello, Kushal!</span>
+    <a href="Log in.htm">Log off</a>
+  </div>
+</header>
+
+<nav class="top-nav">
+  <a href="JobBoard.aspx.htm">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Job Board
+  </a>
+  <a href="shoppernow_JOBS.html" class="active">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    My Jobs <span class="badge">24</span>
+  </a>
+  <a href="Profile.htm">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </a>
+  <a href="ShopperQueryList.aspx.htm">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Messages
+  </a>
+  <a href="QueryLanding.aspx.htm">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    FAQ
+  </a>
+  <a href="ShopperNOWTrainingManual-1.pdf" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Manual
+  </a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div>
+      <div class="page-title">My Jobs</div>
+      <div class="page-subtitle">Action required on 24 jobs</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-ghost" onclick="downloadICS()" style="font-size:12px;padding:5px 12px">📅 Download .ics</button>
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="switchView('list', this)">List</button>
+        <button class="view-btn" onclick="switchView('calendar', this)">Calendar</button>
+        <button class="view-btn" onclick="switchView('map', this)">Map</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Jobs</div>
+      <div class="stat-value">24</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Due Today</div>
+      <div class="stat-value red">1</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">This Week</div>
+      <div class="stat-value">1</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Earnings</div>
+      <div class="stat-value">$560</div>
+    </div>
+  </div>
+
+  <div class="earnings-bar">
+    <div>
+      <div class="earnings-label">Potential Earnings — All 24 Jobs</div>
+      <div class="earnings-value">$560.60</div>
+      <div class="earnings-breakdown">22 × $21.50 &nbsp;·&nbsp; 2 × $26.10 &nbsp;·&nbsp; 1 × $54.00 &nbsp;·&nbsp; 1 × $52.00</div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="listView">
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-chip active" onclick="filterJobs('all', this)">All (24)</button>
+      <button class="filter-chip" onclick="filterJobs('liquorland', this)">Liquorland (12)</button>
+      <button class="filter-chip" onclick="filterJobs('bws', this)">BWS (7)</button>
+      <button class="filter-chip" onclick="filterJobs('dan', this)">Dan Murphy's (5)</button>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Action Required</div>
+      <div class="section-count" id="visibleCount">24</div>
+    </div>
+
+    <div class="jobs-list" id="jobsGrid">
+
+      <a class="job-card today" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=680818" data-brand="liquorland" data-visit="2026-05-25">
+        <div class="job-left">
+          <div class="job-name">
+            Liquorland Lane Cove Park
+            <span class="today-label">Today</span>
+          </div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor In-Store 2026</span>
+            <span class="job-id">#680818</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Shop 1B, 2 Rosenthal Avenue, Lane Cove
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date today-date">25 May 2026</div>
+            <div class="date-window">Window: 25–26 May</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696794" data-brand="dan" data-visit="2026-06-05">
+        <div class="job-left">
+          <div class="job-name">Dan Murphy's Parramatta</div>
+          <div class="job-meta">
+            <span class="tag tag-dan">Dan Murphy's</span>
+            <span class="tag tag-campaign">Mystery Shop</span>
+            <span class="job-id">#696794</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            93 Victoria Rd, Parramatta
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">5 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696823" data-brand="dan" data-visit="2026-06-05">
+        <div class="job-left">
+          <div class="job-name">Dan Murphy's Guildford</div>
+          <div class="job-meta">
+            <span class="tag tag-dan">Dan Murphy's</span>
+            <span class="tag tag-campaign">Mystery Shop</span>
+            <span class="job-id">#696823</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            150 Rawson Rd, Guildford
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">5 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692361" data-brand="liquorland" data-visit="2026-06-11">
+        <div class="job-left">
+          <div class="job-name">Liquorland Waterloo</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692361</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Shop 2 Danks St, 782 Bourke St, Waterloo NSW 2017
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">11 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=691608" data-brand="liquorland" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">Liquorland Chatswood</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Wine, Beer, Spirits Recommendation</span>
+            <span class="job-id">#691608</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Spring Street, Chatswood
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay high">$26.10</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692396" data-brand="liquorland" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">Liquorland Cellars Surry Hills</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692396</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            6/8 Baptist St, Redfern NSW 2016
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696193" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS St Marys</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-campaign">BWS Mystery Shop</span>
+            <span class="job-id">#696193</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            St Marys Village Shopping Centre, Cnr Carinya Ave
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696332" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS Mascot</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-campaign">BWS Mystery Shop</span>
+            <span class="job-id">#696332</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Mascot Central Shopping Centre, 19-33 Kent St
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696361" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS Kingsgrove</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-campaign">BWS Mystery Shop</span>
+            <span class="job-id">#696361</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            11 Mashman Ave, Kingsgrove
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696391" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS Haymarket Quay St</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-campaign">BWS Mystery Shop</span>
+            <span class="job-id">#696391</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Lower Ground, 61-79 Quay St, Haymarket
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696425" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS Erskineville</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-campaign">BWS Mystery Shop</span>
+            <span class="job-id">#696425</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            87 Erskineville Rd, Erskineville
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 1–14 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=695371" data-brand="bws" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">BWS Online — Express Delivery NSW Metro</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-online">Online Order</span>
+            <span class="job-id">#695371</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            Order via bws.com.au or BWS App
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay high">$54.00</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 12–19 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696933" data-brand="dan" data-visit="2026-06-12">
+        <div class="job-left">
+          <div class="job-name">Dan Murphy's Cellar Martin Place</div>
+          <div class="job-meta">
+            <span class="tag tag-dan">Dan Murphy's</span>
+            <span class="tag tag-campaign">Mystery Shop</span>
+            <span class="job-id">#696933</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            53-63 Martin Place, Sydney NSW 2000
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">12 Jun 2026</div>
+            <div class="date-window">Window: 8–16 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=695470" data-brand="bws" data-visit="2026-06-13">
+        <div class="job-left">
+          <div class="job-name">Uber Eats — BWS Order NSW</div>
+          <div class="job-meta">
+            <span class="tag tag-bws">BWS</span>
+            <span class="tag tag-online">Online Order</span>
+            <span class="job-id">#695470</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            Order via Uber Eats from local BWS
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay high">$52.00</div>
+          <div class="job-dates">
+            <div class="visit-date">13 Jun 2026</div>
+            <div class="date-window">Window: 12–19 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=681090" data-brand="liquorland" data-visit="2026-06-13">
+        <div class="job-left">
+          <div class="job-name">Liquorland Mt Druitt</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor In-Store 2026</span>
+            <span class="job-id">#681090</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Westfield Mt Druitt, Cnr Carlisle Ave & Luxford Rd
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">13 Jun 2026</div>
+            <div class="date-window">Window: 11–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=691592" data-brand="liquorland" data-visit="2026-06-16">
+        <div class="job-left">
+          <div class="job-name">Liquorland Lindfield</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Wine, Beer, Spirits Recommendation</span>
+            <span class="job-id">#691592</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            376-384 Pacific Hwy, Lindfield 2089
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay high">$26.10</div>
+          <div class="job-dates">
+            <div class="visit-date">16 Jun 2026</div>
+            <div class="date-window">Window: 1–17 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696862" data-brand="dan" data-visit="2026-06-16">
+        <div class="job-left">
+          <div class="job-name">Dan Murphy's Wolli Creek</div>
+          <div class="job-meta">
+            <span class="tag tag-dan">Dan Murphy's</span>
+            <span class="tag tag-campaign">Mystery Shop</span>
+            <span class="job-id">#696862</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Cnr Princes Hwy & Brodie Sparks Dr, Wolli Creek
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">16 Jun 2026</div>
+            <div class="date-window">Window: 8–16 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696934" data-brand="dan" data-visit="2026-06-16">
+        <div class="job-left">
+          <div class="job-name">Dan Murphy's Casula</div>
+          <div class="job-meta">
+            <span class="tag tag-dan">Dan Murphy's</span>
+            <span class="tag tag-campaign">Mystery Shop</span>
+            <span class="job-id">#696934</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            580 Hume Hwy, Casula
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">16 Jun 2026</div>
+            <div class="date-window">Window: 8–16 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692448" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Doonside</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692448</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Woodcroft Plaza, Cnr Richmond Rd & Woodcroft Dr
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692526" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Roselands</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692526</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Roselands Shopping Centre, Roselands Drive
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692541" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Kings Langley</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692541</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Cnr Raven Hill St & James Cook Drive, Kings Langley
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692542" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Burwood</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692542</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Westfield Burwood, 100 Burwood Road
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692543" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Illawong</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692543</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Illawong Shopping Centre, Cnr Thompson St & Hobart Pl
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+      <a class="job-card" href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692617" data-brand="liquorland" data-visit="2026-06-19">
+        <div class="job-left">
+          <div class="job-name">Liquorland Newtown</div>
+          <div class="job-meta">
+            <span class="tag tag-liquorland">Liquorland</span>
+            <span class="tag tag-campaign">Coles Liquor Instore 2026</span>
+            <span class="job-id">#692617</span>
+          </div>
+          <div class="job-address">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            240-242 King St, Newtown NSW 2042
+          </div>
+        </div>
+        <div class="job-right">
+          <div class="job-pay">$21.50</div>
+          <div class="job-dates">
+            <div class="visit-date">19 Jun 2026</div>
+            <div class="date-window">Window: 8–21 Jun</div>
+          </div>
+          <div class="action-btns" onclick="event.preventDefault()">
+            <button class="btn btn-primary">Check In</button>
+            <button class="btn btn-ghost">Details</button>
+          </div>
+        </div>
+      </a>
+
+    </div><!-- /jobs-list -->
+  </div><!-- /listView -->
+
+  <!-- CALENDAR VIEW -->
+  <div id="calendarView">
+    <div class="cal-month-section" id="calMay"></div>
+    <div class="cal-month-section" id="calJun"></div>
+  </div>
+
+  <!-- MAP VIEW -->
+  <div id="mapView">
+    <div class="map-legend">
+      <span class="filter-label">Legend:</span>
+      <span class="map-legend-item"><span class="map-legend-dot" style="background:var(--brand)"></span>Liquorland</span>
+      <span class="map-legend-item"><span class="map-legend-dot" style="background:#d05f00"></span>BWS</span>
+      <span class="map-legend-item"><span class="map-legend-dot" style="background:#1565c0"></span>Dan Murphy's</span>
+    </div>
+    <div id="mapLeaflet"></div>
+    <div id="onlinePanel"></div>
+  </div>
+
+  <!-- DAY POPUP -->
+  <div class="cal-popup-overlay" id="calPopupOverlay" onclick="closeCalPopup(event)">
+    <div class="cal-popup">
+      <div class="cal-popup-head">
+        <div class="cal-popup-title" id="calPopupTitle"></div>
+        <button class="cal-popup-x" onclick="closeCalPopup()">&#215;</button>
+      </div>
+      <div id="calPopupJobs"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Copyright &copy; Creative Activation 2026</footer>
+
+<script>
+  // ── FILTER ──────────────────────────────────────────────
+  function filterJobs(brand, btn) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    let visible = 0;
+    document.querySelectorAll('#jobsGrid .job-card').forEach(card => {
+      const show = brand === 'all' || card.dataset.brand === brand;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.getElementById('visibleCount').textContent = visible;
+  }
+
+  // ── VIEW TOGGLE ──────────────────────────────────────────
+  let _mapDone = false;
+  function switchView(view, btn) {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('listView').style.display = view === 'list' ? '' : 'none';
+    document.getElementById('calendarView').style.display = view === 'calendar' ? 'block' : 'none';
+    document.getElementById('mapView').style.display = view === 'map' ? 'block' : 'none';
+    if (view === 'map' && !_mapDone) {
+      _mapDone = true;
+      if (window._gmLoaded) setTimeout(initMap, 20);
+      else window._gmPending = true;
+    }
+  }
+
+  // ── CALENDAR BUILD ───────────────────────────────────────
+  const JOBS = [
+    { name: 'Liquorland Lane Cove Park', brand: 'liquorland', visit: '2026-05-25', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=680818' },
+    { name: 'Dan Murphy\'s Parramatta',   brand: 'dan',        visit: '2026-06-05', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696794' },
+    { name: 'Dan Murphy\'s Guildford',    brand: 'dan',        visit: '2026-06-05', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696823' },
+    { name: 'Liquorland Waterloo',        brand: 'liquorland', visit: '2026-06-11', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692361' },
+    { name: 'Liquorland Chatswood',       brand: 'liquorland', visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=691608' },
+    { name: 'Liquorland Cellars Surry Hills', brand: 'liquorland', visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692396' },
+    { name: 'BWS St Marys',              brand: 'bws',        visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696193' },
+    { name: 'BWS Mascot',                brand: 'bws',        visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696332' },
+    { name: 'BWS Kingsgrove',            brand: 'bws',        visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696361' },
+    { name: 'BWS Haymarket Quay St',     brand: 'bws',        visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696391' },
+    { name: 'BWS Erskineville',          brand: 'bws',        visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696425' },
+    { name: 'BWS Online Express Delivery', brand: 'bws',      visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=695371' },
+    { name: 'Dan Murphy\'s Martin Place', brand: 'dan',       visit: '2026-06-12', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696933' },
+    { name: 'Uber Eats BWS Order',       brand: 'bws',        visit: '2026-06-13', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=695470' },
+    { name: 'Liquorland Mt Druitt',      brand: 'liquorland', visit: '2026-06-13', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=681090' },
+    { name: 'Liquorland Lindfield',      brand: 'liquorland', visit: '2026-06-16', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=691592' },
+    { name: 'Dan Murphy\'s Wolli Creek', brand: 'dan',        visit: '2026-06-16', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696862' },
+    { name: 'Dan Murphy\'s Casula',      brand: 'dan',        visit: '2026-06-16', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=696934' },
+    { name: 'Liquorland Doonside',       brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692448' },
+    { name: 'Liquorland Roselands',      brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692526' },
+    { name: 'Liquorland Kings Langley',  brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692541' },
+    { name: 'Liquorland Burwood',        brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692542' },
+    { name: 'Liquorland Illawong',       brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692543' },
+    { name: 'Liquorland Newtown',        brand: 'liquorland', visit: '2026-06-19', href: 'https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=692617' },
+  ];
+
+  function buildCalendar(year, month, containerId) {
+    const container = document.getElementById(containerId);
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const today = new Date().toISOString().split('T')[0];
+
+    // group jobs by date
+    const byDate = {};
+    JOBS.forEach(j => {
+      if (!byDate[j.visit]) byDate[j.visit] = [];
+      byDate[j.visit].push(j);
+    });
+
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const firstDow = new Date(year, month - 1, 1).getDay(); // 0=Sun
+
+    let html = `<div class="cal-month-header">${monthNames[month-1]} ${year}</div>`;
+    html += '<div class="cal-grid">';
+    days.forEach(d => html += `<div class="cal-day-header">${d}</div>`);
+
+    // empty cells before first
+    for (let i = 0; i < firstDow; i++) html += '<div class="cal-cell empty"></div>';
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const jobs = byDate[dateStr] || [];
+      const isToday = dateStr === today;
+      const clickable = jobs.length > 0;
+      html += `<div class="cal-cell ${jobs.length ? 'has-jobs' : ''} ${isToday ? 'today-cell' : ''} ${clickable ? 'clickable' : ''}" ${clickable ? `onclick="openCalPopup('${dateStr}')"` : ''}>`;
+      html += `<div class="cal-date ${isToday ? 'today-num' : ''}">${d}</div>`;
+      // Mobile: colored dots (hidden on desktop via CSS)
+      if (jobs.length) {
+        html += '<div class="cal-dots">';
+        jobs.slice(0, 4).forEach(j => html += `<div class="cal-dot ${j.brand}"></div>`);
+        if (jobs.length > 4) html += `<span style="font-size:8px;color:#888;line-height:1">+${jobs.length - 4}</span>`;
+        html += '</div>';
+      }
+      // Desktop: text pills
+      const shown = jobs.slice(0, 3);
+      shown.forEach(j => {
+        html += `<a class="cal-job-pill ${j.brand}" href="${j.href}" title="${j.name}" onclick="event.stopPropagation()">${j.name}</a>`;
+      });
+      if (jobs.length > 3) html += `<div class="cal-more" onclick="event.stopPropagation();openCalPopup('${dateStr}')">+${jobs.length - 3} more</div>`;
+      html += '</div>';
+    }
+
+    // trailing empties
+    const totalCells = firstDow + daysInMonth;
+    const remainder = totalCells % 7;
+    if (remainder !== 0) {
+      for (let i = 0; i < 7 - remainder; i++) html += '<div class="cal-cell empty"></div>';
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  buildCalendar(2026, 5, 'calMay');
+  buildCalendar(2026, 6, 'calJun');
+
+  // ── MAP DATA ─────────────────────────────────────────────
+  const MAP_JOBS = [
+    { id:'680818', name:'Liquorland Lane Cove Park',       brand:'liquorland', visit:'25 May 2026', window:'25–26 May', pay:'$21.50', address:'Shop 1B, 2 Rosenthal Avenue, Lane Cove',                       lat:-33.8183, lng:151.1706 },
+    { id:'696794', name:"Dan Murphy's Parramatta",         brand:'dan',        visit:'5 Jun 2026',  window:'1–14 Jun',  pay:'$21.50', address:'93 Victoria Rd, Parramatta',                                    lat:-33.8175, lng:151.0052 },
+    { id:'696823', name:"Dan Murphy's Guildford",          brand:'dan',        visit:'5 Jun 2026',  window:'1–14 Jun',  pay:'$21.50', address:'150 Rawson Rd, Guildford',                                      lat:-33.8553, lng:150.9892 },
+    { id:'692361', name:'Liquorland Waterloo',             brand:'liquorland', visit:'11 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'Shop 2 Danks St, 782 Bourke St, Waterloo',                      lat:-33.9012, lng:151.2027 },
+    { id:'691608', name:'Liquorland Chatswood',            brand:'liquorland', visit:'12 Jun 2026', window:'8–21 Jun',  pay:'$26.10', high:true, address:'Spring Street, Chatswood',                           lat:-33.7969, lng:151.1829 },
+    { id:'692396', name:'Liquorland Cellars Surry Hills',  brand:'liquorland', visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'6/8 Baptist St, Redfern',                                       lat:-33.8948, lng:151.2066 },
+    { id:'696193', name:'BWS St Marys',                    brand:'bws',        visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'St Marys Village Shopping Centre, Cnr Carinya Ave',             lat:-33.7723, lng:150.7749 },
+    { id:'696332', name:'BWS Mascot',                      brand:'bws',        visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'Mascot Central Shopping Centre, 19-33 Kent St',                 lat:-33.9238, lng:151.1930 },
+    { id:'696361', name:'BWS Kingsgrove',                  brand:'bws',        visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'11 Mashman Ave, Kingsgrove',                                    lat:-33.9362, lng:151.1007 },
+    { id:'696391', name:'BWS Haymarket Quay St',           brand:'bws',        visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'Lower Ground, 61-79 Quay St, Haymarket',                       lat:-33.8815, lng:151.2040 },
+    { id:'696425', name:'BWS Erskineville',                brand:'bws',        visit:'12 Jun 2026', window:'1–14 Jun',  pay:'$21.50', address:'87 Erskineville Rd, Erskineville',                              lat:-33.9040, lng:151.1861 },
+    { id:'696933', name:"Dan Murphy's Cellar Martin Place",brand:'dan',        visit:'12 Jun 2026', window:'8–16 Jun',  pay:'$21.50', address:'53-63 Martin Place, Sydney',                                    lat:-33.8675, lng:151.2113 },
+    { id:'681090', name:'Liquorland Mt Druitt',            brand:'liquorland', visit:'13 Jun 2026', window:'11–21 Jun', pay:'$21.50', address:'Westfield Mt Druitt, Cnr Carlisle Ave & Luxford Rd',            lat:-33.7709, lng:150.8197 },
+    { id:'691592', name:'Liquorland Lindfield',            brand:'liquorland', visit:'16 Jun 2026', window:'1–17 Jun',  pay:'$26.10', high:true, address:'376-384 Pacific Hwy, Lindfield',                     lat:-33.7786, lng:151.1676 },
+    { id:'696862', name:"Dan Murphy's Wolli Creek",        brand:'dan',        visit:'16 Jun 2026', window:'8–16 Jun',  pay:'$21.50', address:'Cnr Princes Hwy & Brodie Sparks Dr, Wolli Creek',              lat:-33.9416, lng:151.1557 },
+    { id:'696934', name:"Dan Murphy's Casula",             brand:'dan',        visit:'16 Jun 2026', window:'8–16 Jun',  pay:'$21.50', address:'580 Hume Hwy, Casula',                                         lat:-33.9567, lng:150.9247 },
+    { id:'692448', name:'Liquorland Doonside',             brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'Woodcroft Plaza, Cnr Richmond Rd & Woodcroft Dr',               lat:-33.7682, lng:150.8613 },
+    { id:'692526', name:'Liquorland Roselands',            brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'Roselands Shopping Centre, Roselands Drive',                   lat:-33.9224, lng:151.0800 },
+    { id:'692541', name:'Liquorland Kings Langley',        brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'Cnr Raven Hill St & James Cook Drive, Kings Langley',           lat:-33.7559, lng:150.9646 },
+    { id:'692542', name:'Liquorland Burwood',              brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'Westfield Burwood, 100 Burwood Road',                           lat:-33.8773, lng:151.1041 },
+    { id:'692543', name:'Liquorland Illawong',             brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'Illawong Shopping Centre, Cnr Thompson St & Hobart Pl',        lat:-34.0186, lng:151.0493 },
+    { id:'692617', name:'Liquorland Newtown',              brand:'liquorland', visit:'19 Jun 2026', window:'8–21 Jun',  pay:'$21.50', address:'240-242 King St, Newtown',                                      lat:-33.8975, lng:151.1779 },
+  ];
+
+  const ONLINE_JOBS = [
+    { id:'695371', name:'BWS Online — Express Delivery NSW Metro', brand:'bws', visit:'12 Jun 2026', window:'12–19 Jun', pay:'$54.00' },
+    { id:'695470', name:'Uber Eats — BWS Order NSW',               brand:'bws', visit:'13 Jun 2026', window:'12–19 Jun', pay:'$52.00' },
+  ];
+
+  // ── MAP INIT ─────────────────────────────────────────────
+  function makeMapPin(brand) {
+    const colors = { liquorland:'var(--brand)', bws:'#d05f00', dan:'#1565c0' };
+    const c = colors[brand] || '#555';
+    const el = document.createElement('div');
+    el.style.cssText = 'cursor:pointer;transform-origin:bottom center;transition:transform 0.15s';
+    el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 32 44">
+      <path d="M16 1C8.27 1 2 7.27 2 15c0 10.2 14 28 14 28S30 25.2 30 15C30 7.27 23.73 1 16 1z"
+        fill="${c}" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="16" cy="14.5" r="6" fill="white" opacity="0.93"/>
+    </svg>`;
+    el.addEventListener('mouseenter', () => el.style.transform = 'scale(1.18)');
+    el.addEventListener('mouseleave', () => el.style.transform = 'scale(1)');
+    return el;
+  }
+
+  function makePopupHTML(j) {
+    const labels = { liquorland:'Liquorland', bws:'BWS', dan:"Dan Murphy's" };
+    return `<div class="map-popup-header">
+        <span class="tag tag-${j.brand}">${labels[j.brand]}</span>
+        <div class="map-popup-name">${j.name}</div>
+      </div>
+      <div class="map-popup-body">
+        <div class="map-popup-date">Visit: ${j.visit}</div>
+        <div class="map-popup-window">Window: ${j.window}</div>
+        <div class="map-popup-pay${j.high?' high':''}">${j.pay}</div>
+        <div class="map-popup-address">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+          ${j.address}
+        </div>
+        <div class="map-popup-actions">
+          <a href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=${j.id}" class="btn btn-primary" style="font-size:11px;padding:5px 10px">Check In</a>
+          <a href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=${j.id}" class="btn btn-ghost" style="font-size:11px;padding:5px 10px">Details</a>
+        </div>
+      </div>`;
+  }
+
+  function initMap() {
+    const { Map } = google.maps;
+    const { AdvancedMarkerElement } = google.maps.marker;
+
+    const map = new Map(document.getElementById('mapLeaflet'), {
+      mapId: 'DEMO_MAP_ID',
+      center: { lat: -33.87, lng: 151.05 },
+      zoom: 11,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+      zoomControlOptions: { position: google.maps.ControlPosition.RIGHT_TOP },
+    });
+    window._gMap = map;
+
+    const bounds = new google.maps.LatLngBounds();
+    const infoWin = new google.maps.InfoWindow({ minWidth: 250, maxWidth: 300 });
+
+    MAP_JOBS.forEach(j => {
+      const marker = new AdvancedMarkerElement({
+        map,
+        position: { lat: j.lat, lng: j.lng },
+        content: makeMapPin(j.brand),
+        title: j.name,
+      });
+      marker.addListener('click', () => {
+        infoWin.setContent(makePopupHTML(j));
+        infoWin.open({ map, anchor: marker });
+      });
+      bounds.extend({ lat: j.lat, lng: j.lng });
+    });
+    map.fitBounds(bounds, 50);
+
+    // Online jobs panel
+    const labels = { liquorland:'Liquorland', bws:'BWS', dan:"Dan Murphy's" };
+    const panel = document.getElementById('onlinePanel');
+    panel.innerHTML = `
+      <div class="section-header" style="margin-bottom:10px;margin-top:16px">
+        <div class="section-title">Online Orders — no fixed location</div>
+        <div class="section-count">${ONLINE_JOBS.length}</div>
+      </div>
+      <div class="online-jobs-list">${ONLINE_JOBS.map(j => `
+        <div class="online-card">
+          <div>
+            <div class="online-card-name">${j.name}</div>
+            <div class="online-card-meta">
+              <span class="tag tag-${j.brand}">${labels[j.brand]}</span>
+              <span class="job-id">#${j.id}</span>
+              <span style="font-size:12px;color:#666">Visit: ${j.visit} &nbsp;·&nbsp; Window: ${j.window}</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <div class="online-card-pay">${j.pay}</div>
+            <div style="display:flex;gap:6px">
+              <a href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=${j.id}" class="btn btn-primary" style="font-size:11px;padding:5px 10px">Check In</a>
+              <a href="https://shoppernow.com.au/Shopper/JobDetail.aspx?JobID=${j.id}" class="btn btn-ghost" style="font-size:11px;padding:5px 10px">Details</a>
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>`;
+  }
+
+  // ── CALENDAR DAY POPUP ───────────────────────────────────
+  function openCalPopup(dateStr) {
+    const jobs = JOBS.filter(j => j.visit === dateStr);
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const d = new Date(dateStr + 'T00:00:00');
+    document.getElementById('calPopupTitle').textContent =
+      `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} — ${jobs.length} job${jobs.length !== 1 ? 's' : ''}`;
+    document.getElementById('calPopupJobs').innerHTML =
+      jobs.map(j => `<a class="cal-popup-item ${j.brand}" href="${j.href}">${j.name}</a>`).join('');
+    document.getElementById('calPopupOverlay').classList.add('open');
+  }
+
+  function closeCalPopup(event) {
+    if (!event || event.target === document.getElementById('calPopupOverlay')) {
+      document.getElementById('calPopupOverlay').classList.remove('open');
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeCalPopup(); closeMoreSheet(); }
+  });
+
+  // ── FAVORITES & NOTES ────────────────────────────────────
+  (function initCardControls() {
+    const favs = JSON.parse(localStorage.getItem('sn_favs') || '{}');
+    document.querySelectorAll('#jobsGrid .job-card').forEach(card => {
+      const href = card.getAttribute('href') || '';
+      const id = href.match(/JobID=(\d+)/)?.[1];
+      if (!id) return;
+
+      const isFv = !!favs[id];
+      if (isFv) card.classList.add('is-faved');
+
+      const ctrl = document.createElement('div');
+      ctrl.className = 'card-actions';
+      ctrl.innerHTML = `
+        <button class="ca-btn${isFv?' fav-on':''}" onclick="event.preventDefault();toggleFav('${id}',this)">♥ Favourite</button>
+        <button class="ca-btn" onclick="event.preventDefault();toggleNote('${id}')">📝 Note</button>
+      `;
+      const savedNote = localStorage.getItem('sn_note_' + id) || '';
+      const noteDiv = document.createElement('div');
+      noteDiv.className = 'note-area';
+      noteDiv.id = 'na-' + id;
+      noteDiv.innerHTML = `<textarea placeholder="Add a note for this job…" oninput="saveNote('${id}',this.value)">${savedNote.replace(/</g,'&lt;')}</textarea>`;
+
+      const left = card.querySelector('.job-left');
+      if (left) { left.appendChild(ctrl); left.appendChild(noteDiv); }
+    });
+    sortFavs();
+  })();
+
+  function toggleFav(id, btn) {
+    const f = JSON.parse(localStorage.getItem('sn_favs') || '{}');
+    f[id] = !f[id]; localStorage.setItem('sn_favs', JSON.stringify(f));
+    btn.classList.toggle('fav-on', f[id]);
+    btn.closest('.job-card')?.classList.toggle('is-faved', f[id]);
+    sortFavs();
+  }
+
+  function sortFavs() {
+    const f = JSON.parse(localStorage.getItem('sn_favs') || '{}');
+    const list = document.getElementById('jobsGrid');
+    if (!list) return;
+    [...list.querySelectorAll('.job-card')]
+      .sort((a, b) => {
+        const ai = (a.getAttribute('href')||'').match(/JobID=(\d+)/)?.[1] || '';
+        const bi = (b.getAttribute('href')||'').match(/JobID=(\d+)/)?.[1] || '';
+        return (f[bi]?1:0) - (f[ai]?1:0);
+      })
+      .forEach(c => list.appendChild(c));
+  }
+
+  function toggleNote(id) {
+    const el = document.getElementById('na-' + id);
+    if (!el) return;
+    if (el.classList.toggle('open')) el.querySelector('textarea')?.focus();
+  }
+
+  function saveNote(id, val) { localStorage.setItem('sn_note_' + id, val); }
+
+  // ── ICS DOWNLOAD ─────────────────────────────────────────
+  function downloadICS() {
+    const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//ShopperNow//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+    JOBS.forEach(j => {
+      const id = (j.href||'').match(/JobID=(\d+)/)?.[1] || 'x';
+      const mj = MAP_JOBS.find(m => m.id === id);
+      const [y,mo,d] = j.visit.split('-');
+      const dt = `${y}${mo}${d}`;
+      const ed = new Date(+y, +mo-1, +d+1);
+      const edt = `${ed.getFullYear()}${String(ed.getMonth()+1).padStart(2,'0')}${String(ed.getDate()).padStart(2,'0')}`;
+      lines.push('BEGIN:VEVENT',
+        `UID:shoppernow-${id}@jobs`,
+        `DTSTART;VALUE=DATE:${dt}`,
+        `DTEND;VALUE=DATE:${edt}`,
+        `SUMMARY:${j.name}`,
+        ...(mj ? [`LOCATION:${mj.address}`, `DESCRIPTION:Pay: ${mj.pay}\\nURL: ${j.href||''}`] : []),
+        'END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'shoppernow_jobs.ics' });
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+
+</script>
+
+<!-- BOTTOM NAV — mobile only -->
+<nav class="bottom-nav">
+  <a href="JobBoard.aspx.htm" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+    <span>Job Board</span>
+  </a>
+  <a href="shoppernow_JOBS.html" class="bnav-item active">
+    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span>My Jobs</span>
+    <span class="bnav-badge">24</span>
+  </a>
+  <a href="Profile.htm" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profile</span>
+  </a>
+  <a href="ShopperQueryList.aspx.htm" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Messages</span>
+  </a>
+  <a href="QueryLanding.aspx.htm" class="bnav-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span>FAQ</span>
+  </a>
+</nav>
+
+
+<script src="assets/theme-switcher.js"></script>
+</body>
+</html>

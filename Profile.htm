@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('sn-theme')||'red');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — ShopperNow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --brand: #A91E3F; --brand-dark: #8a1833; }
+  [data-theme="purple"] { --brand: #7535DE; --brand-dark: #5e28b8; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    background: #f4f6f9;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+
+  header {
+    background: #2b2b2b; color: #fff; padding: 0 20px; height: 50px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-logo { font-size: 15px; font-weight: 600; color: #fff; text-decoration: none; letter-spacing: 0.02em; }
+  .header-logo span { background: var(--brand); color: #fff; padding: 2px 7px; border-radius: 3px; margin-left: 4px; }
+  .header-user { font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 12px; }
+  .header-user a { color: #888; text-decoration: none; font-size: 12px; border: 0.5px solid #555; padding: 3px 10px; border-radius: 3px; }
+  .header-user a:hover { color: #fff; border-color: #888; }
+
+  nav.top-nav {
+    background: var(--brand);
+    display: flex; gap: 0;
+    justify-content: center;
+    border-bottom: 1px solid var(--brand-dark);
+    overflow-x: auto;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  nav.top-nav::-webkit-scrollbar { display: none; }
+  nav.top-nav a {
+    display: flex; align-items: center; gap: 7px;
+    padding: 0 22px; height: 44px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+  nav.top-nav a:hover { color: #fff; }
+  nav.top-nav a.active { color: #fff; border-bottom-color: #fff; }
+  nav.top-nav a svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .badge { background: #fff; color: var(--brand); font-size: 9px; font-weight: 700; border-radius: 20px; padding: 1px 6px; min-width: 18px; text-align: center; }
+
+  main { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+  .page-title { font-size: 22px; font-weight: 700; }
+  .page-subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex; gap: 0;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 10px 18px; border: none; background: none;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    color: #888; cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: #1a1a1a; }
+  .tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+  .form-grid.full { grid-template-columns: 1fr; }
+  .form-group { margin-bottom: 0; }
+  .form-group.span2 { grid-column: 1 / -1; }
+
+  .form-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #888;
+    display: block; margin-bottom: 5px;
+  }
+  .form-control {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid #ddd; border-radius: 3px;
+    font-size: 13px; font-family: inherit;
+    background: #fff; color: #1a1a1a;
+  }
+  .form-control:focus { outline: none; border-color: #999; }
+  .form-control[disabled] { background: #f9f9f9; color: #888; }
+  select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23aaa'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  /* CARD PANELS */
+  .panel {
+    background: #fff; border: 0.5px solid #dde1ea; border-radius: 8px;
+    overflow: hidden; margin-bottom: 16px; padding: 20px;
+  }
+  .panel-title {
+    background: #2b2b2b; color: #fff;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 8px 14px;
+    margin: -20px -20px 16px;
+  }
+
+  /* AVATAR */
+  .avatar-row {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  }
+  .avatar-circle {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #e0e0e0; border: 2px solid #ddd;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700; color: #888;
+    flex-shrink: 0;
+  }
+  .avatar-info { font-size: 13px; color: #666; }
+  .avatar-name { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 7px 14px; border-radius: 3px;
+    font-size: 12px; font-weight: 600; font-family: inherit;
+    cursor: pointer; border: 1px solid; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .btn-primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .btn-primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+  .btn-ghost { background: #fff; color: #555; border-color: #ccc; }
+  .btn-ghost:hover { border-color: #999; color: #1a1a1a; }
+
+  .form-actions {
+    display: flex; gap: 8px; justify-content: flex-end;
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0f0f0;
+  }
+
+  /* INFO ROW (read-only display) */
+  .info-row {
+    display: flex; gap: 8px; padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0; align-items: flex-start;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #aaa; width: 140px; flex-shrink: 0; padding-top: 1px; }
+  .info-val { font-size: 13px; color: #1a1a1a; }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: #1a1a1a; border-top: 1px solid #2d2d2d;
+    padding: 0 0 env(safe-area-inset-bottom, 0); gap: 0; z-index: 150;
+  }
+  .bnav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 9px 4px 10px; gap: 3px; color: #666; text-decoration: none;
+    font-size: 10px; font-weight: 500; background: none; border: none; cursor: pointer;
+    font-family: inherit; position: relative;
+  }
+  .bnav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .bnav-item.active { color: #fff; }
+  .bnav-item.active::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px; background: #fff; border-radius: 0 0 2px 2px; }
+  .bnav-badge { position: absolute; top: 6px; left: calc(50% + 8px); background: var(--brand); color: #fff; font-size: 9px; font-weight: 700; border-radius: 10px; padding: 1px 5px; line-height: 1.4; border: 1.5px solid #1a1a1a; }
+
+  footer { background: #1a1a1a; color: #888; text-align: center; padding: 12px; font-size: 11.5px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; }
+  body { padding-bottom: 40px; }
+
+  @media (max-width: 640px) {
+    nav.top-nav { display: none; }
+    .bottom-nav { display: flex; }
+    header { padding: 0 14px; height: 48px; }
+    main { padding: 14px 12px 80px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.span2 { grid-column: 1; }
+    .info-key { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="header-logo" href="dashboard.HTML">SHOPPER<span>NOW</span></a>
+  <div class="header-user">
+    <span>Hello, Kushal!</span>
+    <a href="Log in.htm">Log off</a>
+  </div>
+</header>
+
+<nav class="top-nav">
+  <a href="JobBoard.aspx.htm">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Job Board
+  </a>
+  <a href="shoppernow_JOBS.html">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    My Jobs <span class="badge">24</span>
+  </a>
+  <a href="Profile.htm" class="active">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </a>
+  <a href="ShopperQueryList.aspx.htm">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Messages
+  </a>
+  <a href="QueryLanding.aspx.htm">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    FAQ
+  </a>
+  <a href="ShopperNOWTrainingManual-1.pdf" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Manual
+  </a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div>
+      <div class="page-title">Profile</div>
+      <div class="page-subtitle">Manage your personal information and settings</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('personal', this)">Personal Info</button>
+    <button class="tab-btn" onclick="showTab('appearance', this)">Appearance</button>
+    <button class="tab-btn" onclick="showTab('demographics', this)">Demographics</button>
+    <button class="tab-btn" onclick="showTab('payroll', this)">Payroll &amp; Docs</button>
+  </div>
+
+  <!-- PERSONAL INFO -->
+  <div class="tab-panel active" id="tab-personal">
+    <div class="panel">
+      <div class="panel-title">Personal Information</div>
+      <div class="avatar-row">
+        <div class="avatar-circle">KR</div>
+        <div>
+          <div class="avatar-name">Kushal Regmi</div>
+          <div class="avatar-info">kushalregmi15@gmail.com</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <select class="form-control">
+            <option selected>Mr</option>
+            <option>Ms</option>
+            <option>Mrs</option>
+            <option>Dr</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input class="form-control" type="text" value="29-Jan-2006">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Legal First Name</label>
+          <input class="form-control" type="text" value="Kushal">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Legal Last Name</label>
+          <input class="form-control" type="text" value="Regmi">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred First Name</label>
+          <input class="form-control" type="text" value="Kushal">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select class="form-control">
+            <option selected>Male</option>
+            <option>Female</option>
+            <option>Non-binary</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile</label>
+          <input class="form-control" type="tel" value="469854122">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" value="kushalregmi15@gmail.com">
+        </div>
+        <div class="form-group span2">
+          <label class="form-label">Street Address</label>
+          <input class="form-control" type="text" value="Hunter Street">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Suburb / Postcode</label>
+          <input class="form-control" type="text" value="Parramatta, 2150">
+        </div>
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <select class="form-control">
+            <option selected>NSW</option>
+            <option>VIC</option>
+            <option>QLD</option>
+            <option>WA</option>
+            <option>SA</option>
+            <option>TAS</option>
+            <option>ACT</option>
+            <option>NT</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country</label>
+          <select class="form-control">
+            <option selected>Australia</option>
+            <option>New Zealand</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPEARANCE -->
+  <div class="tab-panel" id="tab-appearance">
+    <div class="panel">
+      <div class="panel-title">Appearance</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Height</label>
+          <select class="form-control">
+            <option selected>Average</option>
+            <option>Short</option>
+            <option>Tall</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hair Colour</label>
+          <select class="form-control">
+            <option selected>Black</option>
+            <option>Auburn</option>
+            <option>Bald</option>
+            <option>Blonde</option>
+            <option>White/Grey</option>
+            <option>Brown</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Eye Colour</label>
+          <select class="form-control">
+            <option selected>Brown</option>
+            <option>Blue</option>
+            <option>Green</option>
+            <option>Grey</option>
+            <option>Hazel</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dyed Hair</label>
+          <select class="form-control">
+            <option value="no" selected>No</option>
+            <option value="yes">Yes — Dyed hair to blonde</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMOGRAPHICS -->
+  <div class="tab-panel" id="tab-demographics">
+    <div class="panel">
+      <div class="panel-title">Demographics</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Marital Status</label>
+          <select class="form-control">
+            <option selected>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+            <option>De-facto</option>
+            <option>Separated</option>
+            <option>Widowed</option>
+            <option>Would rather not say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Residence</label>
+          <select class="form-control">
+            <option selected>Renting</option>
+            <option>Home Owner</option>
+            <option>Boarding</option>
+            <option>Living with parents</option>
+            <option>Would rather not say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Employment Status</label>
+          <select class="form-control">
+            <option>Student</option>
+            <option>Casual</option>
+            <option>Employed Part Time</option>
+            <option>Employed Full Time</option>
+            <option selected>Self Employed</option>
+            <option>Homemaker</option>
+            <option>Retired</option>
+            <option>Unemployed</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Household Income</label>
+          <select class="form-control">
+            <option selected>Under $20,000</option>
+            <option>$21,000 – $49,999</option>
+            <option>$50,000 – $79,999</option>
+            <option>$80,000 – $109,999</option>
+            <option>$110,000 – $139,999</option>
+            <option>$140,000+</option>
+            <option>Would rather not say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Education Level</label>
+          <select class="form-control">
+            <option>Some High School</option>
+            <option>High School Certificate</option>
+            <option>TAFE</option>
+            <option>Trade</option>
+            <option>Certificate/Diploma</option>
+            <option selected>University</option>
+            <option>Would rather not say</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Carrier</label>
+          <select class="form-control">
+            <option selected>Telstra</option>
+            <option>Optus</option>
+            <option>Vodafone</option>
+            <option>Other</option>
+            <option>Would rather not say</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYROLL & DOCS -->
+  <div class="tab-panel" id="tab-payroll">
+    <div class="panel">
+      <div class="panel-title">Identity &amp; Visa</div>
+      <div class="info-row">
+        <div class="info-key">Visa Status</div>
+        <div class="info-val">Student Visa (PA4201511)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key">Visa Expiry</div>
+        <div class="info-val">14-Sep-2028</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key">ID Document</div>
+        <div class="info-val"><a href="#" style="color:var(--brand); font-weight:600;">View uploaded document</a></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Bank &amp; Super</div>
+      <div class="info-row">
+        <div class="info-key">Bank Account</div>
+        <div class="info-val">474928466 (on file)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key">Super Fund</div>
+        <div class="info-val">The super fund nominated by my employer</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key">Tax File</div>
+        <div class="info-val">On file — verified</div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost">Update Bank Details</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Copyright &copy; Creative Activation 2026</footer>
+
+<!-- Bottom Nav (mobile) -->
+<nav class="bottom-nav">
+  <a class="bnav-item" href="JobBoard.aspx.htm">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Board
+  </a>
+  <a class="bnav-item" href="shoppernow_JOBS.html">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    My Jobs
+    <span class="bnav-badge">24</span>
+  </a>
+  <a class="bnav-item active" href="Profile.htm">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </a>
+  <a class="bnav-item" href="ShopperQueryList.aspx.htm">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    Messages
+  </a>
+  <a class="bnav-item" href="QueryLanding.aspx.htm">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    FAQ
+  </a>
+</nav>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<script src="assets/theme-switcher.js"></script>
+</body>
+</html>
