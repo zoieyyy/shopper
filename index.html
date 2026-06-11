@@ -137,6 +137,13 @@
   .bnav-item.active::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px; background: #fff; border-radius: 0 0 2px 2px; }
   .bnav-badge { position: absolute; top: 6px; left: calc(50% + 7px); background: var(--brand); color: #fff; font-size: 9px; font-weight: 700; border-radius: 10px; padding: 1px 5px; line-height: 1.4; border: 1.5px solid #1a1a1a; }
 
+  .main-links-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
   @media (max-width: 720px) {
     nav.top-nav { display: none; }
     .bottom-nav { display: flex; }
@@ -144,6 +151,7 @@
     .top-row { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(3,1fr); }
     .stat-num { font-size: 22px; }
+    .main-links-grid { grid-template-columns: repeat(2, 1fr); padding: 14px; gap: 12px; }
   }
 </style>
 </head>
@@ -236,7 +244,7 @@
 
   <div class="card" style="margin-bottom:14px;">
     <div class="card-head">Main Links</div>
-    <div style="padding:30px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+    <div class="main-links-grid">
       <a href="JobBoard.aspx.htm" style="display:block;border-radius:6px;overflow:hidden;border:0.5px solid #dde1ea;">
         <img src="assets/JobBoard.png" alt="Job Board" style="width:100%;height:auto;display:block;">
       </a>
